@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct CurrentWeatherView: View {
+    // MARK: - Properties
+    @ObservedObject var viewModel: CurrentWeatherViewModel = CurrentWeatherViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            viewModel.getGeoInfo()
+        },label: {
+            Text("Get Coordinates for Lisbon")
+        })
     }
 }
 
