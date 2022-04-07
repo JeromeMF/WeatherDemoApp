@@ -34,9 +34,9 @@ class CurrentWeatherViewModel: ObservableObject {
     }
     
     func getCoordinates(_ geoInfo: GeocodingModel){
-        cancellable = ApiService().getWeatherForLocation(geoInfo.lat, geoInfo.lon)
+        cancellable = ApiService().getWeatherForLocation(geoInfo.lat, geoInfo.lon, "metric")
             .sink(receiveCompletion: { _ in }, receiveValue: {
-                print($0)
+                print("WEATHER -------> \($0)")
             })
         print("Done")
     }

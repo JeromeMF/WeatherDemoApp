@@ -35,8 +35,8 @@ class ApiService {
     }
     
     // MARK: - Get weather from coordinates
-    func getWeatherForLocation(_ lat: Double, _ lon: Double) -> AnyPublisher<CurrentWeatherModel, Error> {
-        guard let url = URL(string: BASE_URL_WEATHER + "weather?lat=" + "\(lat)" + "&lon=" + "\(lon)" +  "&appid=\(API_KEY)") else {
+    func getWeatherForLocation(_ lat: Double, _ lon: Double, _ units: String) -> AnyPublisher<CurrentWeatherModel, Error> {
+        guard let url = URL(string: BASE_URL_WEATHER + "weather?lat=" + "\(lat)" + "&lon=" + "\(lon)" + "&units=" + units + "&appid=\(API_KEY)") else {
             fatalError("Invalid URL")
         }
         

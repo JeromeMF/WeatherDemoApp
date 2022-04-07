@@ -18,7 +18,7 @@ struct GeocodingModel: Codable {
     
     enum CodingKeys: String, CodingKey {
         case name
-//        case localNames
+//        case localNames = "local_names"
         case lat
         case lon
         case country
