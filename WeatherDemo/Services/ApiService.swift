@@ -18,12 +18,10 @@ class ApiService {
     private var cancellable: AnyCancellable?
     
     // MARK: - Get Coordinates from city name
-    func getGeoInfo(city: String) -> AnyPublisher<GeoModel, Error> {
+    func getGeoForCity(city: String) -> AnyPublisher<GeoModel, Error> {
         guard let url = URL(string: BASE_URL_GEO + "direct?q=" + city + "&appid=" + API_KEY) else {
             fatalError("Invalid URL")
         }
-        
-        print(url)
         
         let publisher = URLSession.shared.dataTaskPublisher(for: url)
             .receive(on: RunLoop.main)
@@ -35,7 +33,7 @@ class ApiService {
     }
     
     // MARK: - Get weather from coordinates
-    func getWeatherForLocation(_ lat: Double, _ lon: Double, _ units: String) -> AnyPublisher<CurrentWeatherModel, Error> {
+    func getWeatherForLocation(_ lat: Double, _ lon: Double, _ units: String) -> AnyPublisher<WeatherModel, Error> {
         guard let url = URL(string: BASE_URL_WEATHER + "weather?lat=" + "\(lat)" + "&lon=" + "\(lon)" + "&units=" + units + "&appid=\(API_KEY)") else {
             fatalError("Invalid URL")
         }
@@ -43,7 +41,24 @@ class ApiService {
         let publisher = URLSession.shared.dataTaskPublisher(for: url)
             .receive(on: RunLoop.main)
             .map(\.data)
-            .decode(type: CurrentWeatherModel.self, decoder: JSONDecoder())
+            .decode(type: WeatherModel.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+        
+        return publisher
+    }
+    
+    // MARK: - Get 4 days forecast
+    func getForecast(_ lat: Double, _ lon: Double, _ units: String) -> AnyPublisher<ForecastModel, Error> {
+        guard let url = URL(string: BASE_URL_WEATHER + "onecall?lat=" + "\(lat)" + "&lon=" + "\(lon)" + "&exclude=current,hourly,minutely,alert" + "&units=" + units + "&appid=\(API_KEY)") else {
+            fatalError("Invalid URL")
+        }
+        
+        print(url)
+        
+        let publisher = URLSession.shared.dataTaskPublisher(for: url)
+            .receive(on: RunLoop.main)
+            .map(\.data)
+            .decode(type: ForecastModel.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
         
         return publisher

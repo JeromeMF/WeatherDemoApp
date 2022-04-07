@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherModel.swift
+//  WeatherModel.swift
 //  WeatherDemo
 //
 //  Created by Jérôme Figueiredo on 06/04/2022.
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - CurrentWeatherModel
-struct CurrentWeatherModel: Codable {
+struct WeatherModel: Codable {
     let coord: Coord
     let weather: [Weather]
     let base: String
