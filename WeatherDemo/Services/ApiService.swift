@@ -19,6 +19,9 @@ class ApiService {
     
     // MARK: - Get Coordinates from city name
     func getGeoForCity(city: String) -> AnyPublisher<GeoModel, Error> {
+        let city = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        guard let city = city else { fatalError("Invalid URL") }
+        
         guard let url = URL(string: BASE_URL_GEO + "direct?q=" + city + "&appid=" + API_KEY) else {
             fatalError("Invalid URL")
         }
