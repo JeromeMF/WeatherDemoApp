@@ -18,11 +18,11 @@ class ApiService {
     private var cancellable: AnyCancellable?
     
     // MARK: - Get Coordinates from city name
-    func getGeoForCity(city: String) -> AnyPublisher<GeoModel, Error> {
+    func getGeoForCity(city: String, limit: Int) -> AnyPublisher<GeoModel, Error> {
         let city = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         guard let city = city else { fatalError("Invalid URL") }
         
-        guard let url = URL(string: BASE_URL_GEO + "direct?q=" + city + "&appid=" + API_KEY) else {
+        guard let url = URL(string: BASE_URL_GEO + "direct?q=" + city + "&limit=" + "\(limit)" + "&appid=" + API_KEY) else {
             fatalError("Invalid URL")
         }
         
@@ -56,7 +56,7 @@ class ApiService {
             fatalError("Invalid URL")
         }
         
-        print(url)
+//        print(url)
         
         let publisher = URLSession.shared.dataTaskPublisher(for: url)
             .receive(on: RunLoop.main)

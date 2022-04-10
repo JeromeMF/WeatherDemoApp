@@ -1,13 +1,13 @@
 //
-//  ForecastView.swift
+//  ForecastDayView.swift
 //  WeatherDemo
 //
-//  Created by Jérôme Figueiredo on 09/04/2022.
+//  Created by Jérôme Figueiredo on 10/04/2022.
 //
 
 import SwiftUI
 
-struct ForecastView: View {
+struct ForecastDayView: View {
     // MARK: - Properties
     @Binding var weatherColor: Color
     @Binding var icon: Image
@@ -47,15 +47,13 @@ struct ForecastView: View {
     }
 }
 
-// MARK: - Preview
-struct ForecastView_Previews: PreviewProvider {
+struct ForecastDayView_Previews: PreviewProvider {
     static var previews: some View {
-//        ForecastView(weatherColor: .constant(Color.weather.clear))
-        ForecastView(weatherColor: .constant(Color.weather.clear),
-                     icon: .constant(Image("thunderstorm")),
-                     dayName: .constant("Tue"),
-                     maxTemp: .constant(104),
-                     minTemp: .constant(80))
-            .previewLayout(.sizeThatFits)
+        ForecastDayView(weatherColor: .constant(Color.weather.clear),
+                        icon: .constant(Image("thunderstorm")),
+                        dayName: .constant("Tue"),
+                        maxTemp: .constant(104),
+                        minTemp: .constant(80))
+               .previewLayout(.sizeThatFits)
     }
 }

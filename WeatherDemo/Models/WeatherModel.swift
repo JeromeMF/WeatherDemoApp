@@ -145,5 +145,20 @@ extension Weather {
             return Color.weather.clear
         }
     }
+    
+    func fontColor() -> Color {
+        switch id {
+        case 511:
+            return Color.weather.rain
+        case 600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622:
+            return Color.weather.rain
+        case 701, 711, 721, 731, 741, 751, 761, 762, 771, 781:
+            return Color.weather.rain
+        case 801, 802, 803, 804:
+            return Color.weather.rain
+        default:
+            return Color.white
+        }
+    }
 
 }
