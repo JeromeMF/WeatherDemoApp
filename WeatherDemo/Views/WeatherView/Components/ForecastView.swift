@@ -18,25 +18,29 @@ struct ForecastView: View {
                          icon: $viewModel.day1Icon,
                          dayName: $viewModel.day1name,
                          maxTemp: $viewModel.day1MaxTemp,
-                         minTemp: $viewModel.day1MinTemp)
+                            minTemp: $viewModel.day1MinTemp,
+                            isLoading: $viewModel.forecastFinishedLoading)
             
             ForecastDayView(weatherColor: $viewModel.day2Color,
                          icon: $viewModel.day2Icon,
                          dayName: $viewModel.day2name,
                          maxTemp: $viewModel.day2MaxTemp,
-                         minTemp: $viewModel.day2MinTemp)
+                         minTemp: $viewModel.day2MinTemp,
+                            isLoading: $viewModel.forecastFinishedLoading)
             
             ForecastDayView(weatherColor: $viewModel.day3Color,
                          icon: $viewModel.day3Icon,
                          dayName: $viewModel.day3name,
                          maxTemp: $viewModel.day3MaxTemp,
-                         minTemp: $viewModel.day3MinTemp)
+                         minTemp: $viewModel.day3MinTemp,
+                            isLoading: $viewModel.forecastFinishedLoading)
             
             ForecastDayView(weatherColor: $viewModel.day4Color,
                          icon: $viewModel.day4Icon,
                          dayName: $viewModel.day4name,
                          maxTemp: $viewModel.day4MaxTemp,
-                         minTemp: $viewModel.day4MinTemp)
+                         minTemp: $viewModel.day4MinTemp,
+                            isLoading: $viewModel.forecastFinishedLoading)
         }
         .padding(.bottom)
     }

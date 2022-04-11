@@ -10,8 +10,14 @@ import SwiftUI
 struct WeatherView: View {
     // MARK: - Properties
     @ObservedObject var viewModel: WeatherViewModel = WeatherViewModel()
-    //    @StateObject var locationViewModel = LocationViewModel()
-    @State private var showingSearch = false
+    
+    @State private var showingSearch: Bool = false
+    @State var currentLocation: String = "Lisbon"
+    @State var currentCountry: String = "PT"
+    
+    init() {
+        viewModel.getWeather(currentLocation, currentCountry)
+    }
     
     // MARK: - Body
     var body: some View {
@@ -49,7 +55,7 @@ struct WeatherView: View {
                 HStack() {
                     Button(action: {
                         showingSearch.toggle()
-                        print("serach")
+                        print("search")
                     },
                            label: { Image(systemName: "magnifyingglass")
                             .resizable()
@@ -57,9 +63,17 @@ struct WeatherView: View {
                             .frame(width: 30)
                     })
                     
-                    
-                    
                     Spacer()
+                    
+                    Button(action: {
+                        viewModel.getWeather(currentLocation, currentCountry)
+                        print("refresh")
+                    },
+                           label: { Image(systemName: "arrow.triangle.2.circlepath")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30)
+                    })
                     
                 }
                 .foregroundColor(viewModel.fontColor)
@@ -68,16 +82,27 @@ struct WeatherView: View {
                 ForecastView(viewModel: viewModel)
                     .edgesIgnoringSafeArea(.bottom)
             }
-            .onAppear() {
-                viewModel.getWeatherForLocation("Lisbon")
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    viewModel.getForecastForLocation("Lisbon")
-                }
-            }
+//            .onAppear() {
+                //                viewModel.getWeatherForLocation("Lisbon")
+                //
+                //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                //                    viewModel.getForecastForLocation("Lisbon")
+                //                }
+//            }
+            //            .onReceive($selectedResult) {_ in
+            //                print(selectedResult)
+            //            }
+//            .onReceive($currentLocation) { _ in
+//                print(currentLocation)
+//            }
+            .onChange(of: currentLocation) { _ in
+                viewModel.getWeather(currentLocation, currentCountry)
+                        }
             .sheet(isPresented: $showingSearch) {
-                SearchView(selectedResult: .constant(""))
+                SearchView(selectedLocation: $currentLocation,
+                           selectedCountry: $currentCountry)
             }
+            
         }//: ZStack
         .background(viewModel.weatherColor)
     }

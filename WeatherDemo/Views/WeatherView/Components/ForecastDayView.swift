@@ -14,6 +14,7 @@ struct ForecastDayView: View {
     @Binding var dayName: String
     @Binding var maxTemp: Int
     @Binding var minTemp: Int
+    @Binding var isLoading: Bool
     
     // MARK: - Body
     var body: some View {
@@ -21,7 +22,17 @@ struct ForecastDayView: View {
             Color.black
                 .opacity(0.1)
                 .ignoresSafeArea()
-                
+            
+            VStack() {
+                HStack() {
+                    ProgressView()
+                        .tint(Color.weather.rain)
+                        .scaleEffect(1.5)
+                        .opacity(isLoading ? 0 : 1)
+                    
+                }
+            }
+            
             VStack {
                 Text(dayName.uppercased())
                     .font(.subtitleS)
@@ -40,6 +51,8 @@ struct ForecastDayView: View {
                     .padding(.bottom)
             }//: VStack
             .padding(.horizontal, 5)
+            .opacity(isLoading ? 1 : 0)
+            .animation(.default)
         }//: ZStack
         .background(weatherColor)
         .frame(width: UIScreen.main.bounds.size.width / 4, height: 130)
@@ -53,7 +66,8 @@ struct ForecastDayView_Previews: PreviewProvider {
                         icon: .constant(Image("thunderstorm")),
                         dayName: .constant("Tue"),
                         maxTemp: .constant(104),
-                        minTemp: .constant(80))
-               .previewLayout(.sizeThatFits)
+                        minTemp: .constant(80),
+                        isLoading: .constant(false))
+        .previewLayout(.sizeThatFits)
     }
 }

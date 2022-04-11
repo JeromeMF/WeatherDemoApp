@@ -51,29 +51,37 @@ class WeatherViewModel: ObservableObject {
     @Published var day3Color: Color = .white
     @Published var day4Color: Color = .white
     
-    //    @Published var backgroundColor: Color = .white
     @Published var weatherIcon: Image = Image("clear")
     @Published var weatherColor: Color = .white
-    
+    @Published var forecastFinishedLoading: Bool = false
+    @Published var weatherFinishedLoading: Bool = false
     
     private var cancellable: AnyCancellable?
     
     // MARK: - Methods
     // MARK: - Weather methods
+    func getWeather(_ location: String, _ country: String) {
+        self.weatherFinishedLoading = false
+        self.forecastFinishedLoading = false
+        
+        self.getWeatherForLocation(location, country)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.getForecastForLocation(location, country)
+        }
+    }
     
     // MARK: - Get geo data and call weather from geo
-    func getWeatherForLocation(_ location: String) {
+    func getWeatherForLocation(_ location: String, _ country: String) {
         var geoInfo: GeocodingModel = GeocodingModel.emptyModel()
         
-        cancellable = ApiService().getGeoForCity(city: location, limit: 1)
+        cancellable = ApiService().getGeoForCity(city: location, country: country, limit: 1)
             .sink(receiveCompletion: { _ in
                 self.getWeatherFromGeo(geoInfo)
             }, receiveValue: { geo in
-                print("Geo Info: \(geo)")
+                //                print("Geo Info: \(geo)")
                 geoInfo = geo[0]
-                
-//                self.getWeatherFromGeo(geoInfo)
-                
+                            
                 self.currentLocation = geo[0].name.uppercased()
                 self.countryCode = geo[0].country.uppercased()
             })
@@ -83,9 +91,10 @@ class WeatherViewModel: ObservableObject {
     func getWeatherFromGeo(_ geoInfo: GeocodingModel){
         cancellable = ApiService().getWeatherForLocation(geoInfo.lat, geoInfo.lon, "metric")
             .sink(receiveCompletion: { _ in
-                print("Done fetching weather")
+                //                print("Done fetching weather")
+                self.weatherFinishedLoading = true
             }, receiveValue: { weather in
-                print("WEATHER -------> \(weather)")
+                //                print("WEATHER -------> \(weather)")
                 let date = Date(timeIntervalSince1970: TimeInterval(weather.dt))
                 
                 self.currentTemperature = Int(weather.main.temp.rounded())
@@ -104,22 +113,26 @@ class WeatherViewModel: ObservableObject {
     }
     
     // MARK: - Forecast methods
-    func getForecastForLocation(_ location: String) {
+    // MARK: - Get geo data for forecast
+    func getForecastForLocation(_ location: String, _ country: String) {
         var geoInfo: GeocodingModel = GeocodingModel.emptyModel()
         
-        cancellable = ApiService().getGeoForCity(city: location, limit: 1)
+        cancellable = ApiService().getGeoForCity(city: location, country: country, limit: 1)
             .sink(receiveCompletion: { _ in
                 self.getForecastFromGeo(geoInfo)
             }, receiveValue: { geo in
-                print("Geo Info: \(geo)")
+                //                print("Geo Info: \(geo)")
                 geoInfo = geo[0]
             })
     }
     
+    
+    // MARK: - Get forecast from geo data
     func getForecastFromGeo(_ geoInfo: GeocodingModel){
         cancellable = ApiService().getForecast(geoInfo.lat, geoInfo.lon, "metric")
             .sink(receiveCompletion: { _ in
                 print("Done fetching Forecast")
+                self.forecastFinishedLoading = true
             }, receiveValue: { forecast in
                 print(forecast)
                 
@@ -157,20 +170,14 @@ class WeatherViewModel: ObservableObject {
                 //                let nextDate = theCalendar.date(byAdding: dayComponent, to: date)
                 //                print("nextDate : \(nextDate)")
                 
+                
+                
                 self.day1name = date1!.dayOfWeek() ?? "N/A"//self.getWeekDay(date: date1!)
                 self.day2name = date2!.dayOfWeek() ?? "N/A"
                 self.day3name = date3!.dayOfWeek() ?? "N/A"
                 self.day4name = date4!.dayOfWeek() ?? "N/A"
             })
     }
-    
-    //    func getColorForWeather(_ weather: Weather) {
-    //        self.weatherColor = weather.weatherColor()
-    //    }
-    //
-    //    func getWeatherIcon(_ weather: Weather) {
-    //        self.weatherIcon = weather.weatherIcon()
-    //    }
     
     func getColorForWeather(_ weather: Weather) -> Color {
         return weather.weatherColor()
@@ -184,6 +191,14 @@ class WeatherViewModel: ObservableObject {
         return weather.fontColor()
     }
     
+    //    func getColorForWeather(_ weather: Weather) {
+    //        self.weatherColor = weather.weatherColor()
+    //    }
+    //
+    //    func getWeatherIcon(_ weather: Weather) {
+    //        self.weatherIcon = weather.weatherIcon()
+    //    }
+    
     
     func getWeekDay(date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -194,6 +209,7 @@ class WeatherViewModel: ObservableObject {
     }
 }
 
+// MARK: - Date extension
 extension Date {
     func dayOfWeek() -> String? {
         let dateFormatter = DateFormatter()
