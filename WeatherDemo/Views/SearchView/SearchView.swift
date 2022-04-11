@@ -15,7 +15,6 @@ struct SearchView: View {
     @Binding var selectedLocation: String
     @Binding var selectedCountry: String
     @State var searchText: String = ""
-    //    @State var selectKeeper: String? = nil
     @State private var isEditing = false
     
     // MARK: - Init
@@ -50,8 +49,8 @@ struct SearchView: View {
                                 .frame(width: 10)
                             
                             Text("Back")
-                        }
-                    })
+                        }//: HStack
+                    })//: Button
                     
                     Spacer()
                     
@@ -67,7 +66,7 @@ struct SearchView: View {
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color.weather.rain)
-                    .foregroundColor(Color.weather.clouds)
+                    .foregroundColor(Color.weather.mist)
                     .cornerRadius(8)
                     .padding(.horizontal, 10)
                     .onTapGesture {
@@ -108,9 +107,9 @@ struct SearchView: View {
                         selectedLocation = result.name
                         selectedCountry = result.country
                         dismiss()
-                    }
+                    }//: Tap Gesture
                 }//: Result List
-            }
+            }//: VStack
         }//: Top ZStack
         .background(Color.weather.snow)
     }

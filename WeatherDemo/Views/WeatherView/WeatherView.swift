@@ -62,6 +62,8 @@ struct WeatherView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30)
                     })
+                    .opacity(!viewModel.forecastFinishedLoading ? 0.5 : 1)
+                    .disabled(!viewModel.forecastFinishedLoading)
                     
                     Spacer()
                     
@@ -82,19 +84,9 @@ struct WeatherView: View {
                 ForecastView(viewModel: viewModel)
                     .edgesIgnoringSafeArea(.bottom)
             }
-//            .onAppear() {
-                //                viewModel.getWeatherForLocation("Lisbon")
-                //
-                //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                //                    viewModel.getForecastForLocation("Lisbon")
-                //                }
-//            }
-            //            .onReceive($selectedResult) {_ in
-            //                print(selectedResult)
-            //            }
-//            .onReceive($currentLocation) { _ in
-//                print(currentLocation)
-//            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                viewModel.getWeather(currentLocation, currentCountry)
+            }
             .onChange(of: currentLocation) { _ in
                 viewModel.getWeather(currentLocation, currentCountry)
                         }

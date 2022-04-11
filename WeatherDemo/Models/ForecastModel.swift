@@ -86,3 +86,43 @@ struct Temp: Codable {
     let eve: Double
     let morn: Double
 }
+
+// MARK: - Empty model
+extension ForecastModel {
+    static func emptyModel() -> ForecastModel {
+        return ForecastModel(lat: 0,
+                             lon: 0,
+                             timezone: "",
+                             timezoneOffset: 0,
+                             daily: [Daily(dt: 0,
+                                           sunrise: 0,
+                                           sunset: 0,
+                                           moonrise: 0,
+                                           moonset: 0,
+                                           moonPhase: 0,
+                                           temp: Temp(day: 0.0,
+                                                      min: 0.0,
+                                                      max: 0.0,
+                                                      night: 0.0,
+                                                      eve: 0.0,
+                                                      morn: 0.0),
+                                           feelsLike: FeelsLike(day: 0.0,
+                                                                night: 0.0,
+                                                                eve: 0.0,
+                                                                morn: 0.0),
+                                           pressure: 0,
+                                           humidity: 0,
+                                           dewPoint: 0.0,
+                                           windSpeed: 0.0,
+                                           windDeg: 0,
+                                           windGust: 0.0,
+                                           weather: [Weather(id: 0,
+                                                             main: "",
+                                                             weatherDescription: "",
+                                                             icon: "")],
+                                           clouds: 0,
+                                           pop: 0.0,
+                                           rain: 0.0,
+                                           uvi: 0.0)])
+    }
+}

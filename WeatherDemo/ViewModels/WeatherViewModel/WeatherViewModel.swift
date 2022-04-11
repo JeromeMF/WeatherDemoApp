@@ -79,9 +79,8 @@ class WeatherViewModel: ObservableObject {
             .sink(receiveCompletion: { _ in
                 self.getWeatherFromGeo(geoInfo)
             }, receiveValue: { geo in
-                //                print("Geo Info: \(geo)")
                 geoInfo = geo[0]
-                            
+                
                 self.currentLocation = geo[0].name.uppercased()
                 self.countryCode = geo[0].country.uppercased()
             })
@@ -91,10 +90,8 @@ class WeatherViewModel: ObservableObject {
     func getWeatherFromGeo(_ geoInfo: GeocodingModel){
         cancellable = ApiService().getWeatherForLocation(geoInfo.lat, geoInfo.lon, "metric")
             .sink(receiveCompletion: { _ in
-                //                print("Done fetching weather")
                 self.weatherFinishedLoading = true
             }, receiveValue: { weather in
-                //                print("WEATHER -------> \(weather)")
                 let date = Date(timeIntervalSince1970: TimeInterval(weather.dt))
                 
                 self.currentTemperature = Int(weather.main.temp.rounded())
@@ -109,6 +106,7 @@ class WeatherViewModel: ObservableObject {
                 self.fontColor = self.getFontColor(weather.weather[0])
                 self.weatherIcon = self.getWeatherIcon(weather.weather[0])
                 self.currentDayName = self.getWeekDay(date: date)
+                self.weatherFinishedLoading = true
             })
     }
     
@@ -121,7 +119,6 @@ class WeatherViewModel: ObservableObject {
             .sink(receiveCompletion: { _ in
                 self.getForecastFromGeo(geoInfo)
             }, receiveValue: { geo in
-                //                print("Geo Info: \(geo)")
                 geoInfo = geo[0]
             })
     }
@@ -131,10 +128,9 @@ class WeatherViewModel: ObservableObject {
     func getForecastFromGeo(_ geoInfo: GeocodingModel){
         cancellable = ApiService().getForecast(geoInfo.lat, geoInfo.lon, "metric")
             .sink(receiveCompletion: { _ in
-                print("Done fetching Forecast")
                 self.forecastFinishedLoading = true
             }, receiveValue: { forecast in
-                print(forecast)
+                //                print(forecast)
                 
                 self.day1MaxTemp = Int(forecast.daily[1].temp.max.rounded())
                 self.day2MaxTemp = Int(forecast.daily[2].temp.max.rounded())
@@ -163,16 +159,7 @@ class WeatherViewModel: ObservableObject {
                 let date3 = Calendar.current.date(byAdding: .day, value: 3, to: date)
                 let date4 = Calendar.current.date(byAdding: .day, value: 4, to: date)
                 
-                //                var dayComponent = DateComponents()
-                //                dayComponent.day = 1 // For removing one day (yesterday): -1
-                //
-                //                let theCalendar = Calendar.current
-                //                let nextDate = theCalendar.date(byAdding: dayComponent, to: date)
-                //                print("nextDate : \(nextDate)")
-                
-                
-                
-                self.day1name = date1!.dayOfWeek() ?? "N/A"//self.getWeekDay(date: date1!)
+                self.day1name = date1!.dayOfWeek() ?? "N/A"
                 self.day2name = date2!.dayOfWeek() ?? "N/A"
                 self.day3name = date3!.dayOfWeek() ?? "N/A"
                 self.day4name = date4!.dayOfWeek() ?? "N/A"
@@ -204,7 +191,7 @@ class WeatherViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         let weekDay = dateFormatter.string(from: Date())
-        print("WEEKDAY: \(weekDay)")
+        //        print("WEEKDAY: \(weekDay)")
         return weekDay.uppercased()
     }
 }
@@ -215,6 +202,5 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: self).prefix(3).capitalized
-        // or use capitalized(with: locale) if you want
     }
 }

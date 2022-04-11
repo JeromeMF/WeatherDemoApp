@@ -29,9 +29,8 @@ struct ForecastDayView: View {
                         .tint(Color.weather.rain)
                         .scaleEffect(1.5)
                         .opacity(isLoading ? 0 : 1)
-                    
-                }
-            }
+                }//: HStack
+            }//: VStack
             
             VStack {
                 Text(dayName.uppercased())

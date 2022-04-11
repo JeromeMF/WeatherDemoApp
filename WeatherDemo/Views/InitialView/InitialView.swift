@@ -10,18 +10,10 @@ import SwiftUI
 struct InitialView: View {
     // MARK: - Properties
     @StateObject var locationViewModel = LocationViewModel()
-    @State var acceptedLocation = false
     
     // MARK: - Body
     var body: some View {
-        NavigationView {
-            
-//                            NavigationLink(destination: WeatherView()) {
-//            //                    EmptyView()
-////                                WeatherView()
-//                                Text("Test")
-//                            }
-//        ZStack() {
+        ZStack() {
             VStack {
                 Spacer()
                 Image("landscape1")
@@ -37,20 +29,13 @@ struct InitialView: View {
             case .restricted:
                 ErrorView(errorText: "Location use is restricted.")
             case .denied:
-                ErrorView(errorText: "The app does not have location permissions. Please enable them in settings if you want accurate data. \nDefault location used: London")
+                ErrorView(errorText: "The app does not have location permissions. Please enable them in settings if you want accurate data. \nDefault location used: Lisbon")
             case .authorizedAlways, .authorizedWhenInUse:
-//                acceptedLocation.toggle()
                 WeatherView()
-//                    .environmentObject(locationViewModel)
-//                NavigationLink(destination: WeatherView(), isActive: $acceptedLocation) {
-//                            acceptedLocation.toggle()
-//
-//                }
+                    .environmentObject(locationViewModel)
             default:
                 Text("Unexpected status")
             }
-            
-//        }
         }
     }
 }

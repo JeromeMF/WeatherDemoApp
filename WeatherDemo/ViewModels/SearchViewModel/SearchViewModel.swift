@@ -17,17 +17,12 @@ class SearchViewModel: ObservableObject {
     
     // MARK: - Methods
     func searchLocations(_ location: String) {
-        //        var geoInfo: GeocodingModel = GeocodingModel.emptyModel()
-        
         cancellable = ApiService().getGeoForCity(city: location, country: "", limit: 5)
             .sink(receiveCompletion: { _ in
                 
             }, receiveValue: { geos in
-                //                print("SEARCH : \(geos)")
                 for geo in geos {
-                    //                    self.result[geo.name] = geo.country
                     self.result.append(geo)
-                    //                    print("RESULT: \(geo.name) \(geo.country)")
                 }
             })
     }

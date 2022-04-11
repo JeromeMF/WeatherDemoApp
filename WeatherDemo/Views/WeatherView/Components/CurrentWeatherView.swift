@@ -20,9 +20,8 @@ struct CurrentWeatherView: View {
                         .tint(viewModel.fontColor)
                         .scaleEffect(1.5)
                         .opacity(viewModel.weatherFinishedLoading ? 0 : 1)
-                    
-                }
-            }
+                }//: HStack
+            }//: VStack
             
             VStack() {
                 ZStack(alignment: .center) {
@@ -30,7 +29,8 @@ struct CurrentWeatherView: View {
                         Spacer()
                         Text("\(viewModel.currentTemperature)")
                             .font(.system(size: 100))
-                            .foregroundColor(viewModel.fontColor)                                .edgesIgnoringSafeArea(.all)
+                            .foregroundColor(viewModel.fontColor)
+                            .edgesIgnoringSafeArea(.all)
                         
                         VStack(alignment:.leading) {
                             Text("°C")
@@ -39,14 +39,14 @@ struct CurrentWeatherView: View {
                             HStack {
                                 Image(systemName: "arrow.up")
                                 Text("\(viewModel.maxTemp)")
-                            }
+                            }//: HStack
                             .font(.headingM)
                             .foregroundColor(viewModel.fontColor)
                             HStack {
                                 Image(systemName: "arrow.down")
                                 Text("\(viewModel.minTemp)")
                                 
-                            }
+                            }//: HStack
                             .font(.headingM)
                             .foregroundColor(viewModel.fontColor)
                         }//: VStack

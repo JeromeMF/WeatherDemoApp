@@ -41,7 +41,7 @@ struct ForecastView: View {
                          maxTemp: $viewModel.day4MaxTemp,
                          minTemp: $viewModel.day4MinTemp,
                             isLoading: $viewModel.forecastFinishedLoading)
-        }
+        }//: HStack
         .padding(.bottom)
     }
 }

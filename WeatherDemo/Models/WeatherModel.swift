@@ -160,5 +160,32 @@ extension Weather {
             return Color.white
         }
     }
+}
 
+// MARK: - Empty weather model
+extension WeatherModel {
+    static func emptyModel() -> WeatherModel {
+        return WeatherModel(coord: Coord(lon: 0,
+                                         lat: 0),
+                            weather: [Weather(id: 0,
+                                              main: "",
+                                              weatherDescription: "",
+                                              icon: "")],
+                            base: "",
+                            main: Main(temp: 0.0,
+                                       feelsLike: 0.0,
+                                       tempMin: 0.0,
+                                       tempMax: 0.0,
+                                       pressure: 0,
+                                       humidity: 0),
+                            visibility: 0,
+                            wind: Wind(speed: 0.0,
+                                       deg: 0),
+                            clouds: Clouds(all: 0),
+                            dt: 0,
+                            timezone: 0,
+                            id: 0,
+                            name: "",
+                            cod: 0)
+    }
 }

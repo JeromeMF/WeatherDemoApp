@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RequestLocationView: View {
+    // MARK: - Properties
     @EnvironmentObject var locationViewModel: LocationViewModel
     
+    // MARK: - Body
     var body: some View {
         VStack {
             Image(systemName: "location.magnifyingglass")
@@ -30,10 +32,11 @@ struct RequestLocationView: View {
                 .foregroundColor(.gray)
                 .font(.caption)
                 .multilineTextAlignment(.center)
-        }
+        }//: VStack
     }
 }
 
+// MARK: - Preview
 struct RequestLocationView_Previews: PreviewProvider {
     static var previews: some View {
         RequestLocationView()
