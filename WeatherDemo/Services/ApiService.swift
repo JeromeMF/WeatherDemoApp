@@ -15,7 +15,7 @@ class ApiService {
     let BASE_URL_GEO = "http://api.openweathermap.org/geo/1.0/"
     let BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/"
     
-//    let bag = DisposeBag()
+    //    let bag = DisposeBag()
     
     private var cancellable: AnyCancellable?
     
@@ -57,7 +57,7 @@ class ApiService {
         guard let url = URL(string: BASE_URL_WEATHER + "onecall?lat=" + "\(lat)" + "&lon=" + "\(lon)" + "&exclude=current,hourly,minutely,alert" + "&units=" + units + "&appid=\(API_KEY)") else {
             fatalError("Invalid URL")
         }
-                
+        
         let publisher = URLSession.shared.dataTaskPublisher(for: url)
             .receive(on: RunLoop.main)
             .map(\.data)

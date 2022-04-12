@@ -12,9 +12,7 @@ import UIKit
 extension Color {
     
     static let weather = WeatherColors()
-//    static let supporting = SupportingColors()
     //    static let typography = TypographyColors()
-//    }
     
     // MARK: - Weather colors
     struct WeatherColors {
@@ -28,12 +26,5 @@ extension Color {
         let mist = Color("Mist")
     }
     
-    // MARK: - Supporting colors
-//    struct SupportingColors {
-//        let darkGreen = Color("DarkGreen")
-//        //    let lighterDarkGreen = Color(hex: "#15585F")
-//        let darkerGreen = Color("DarkerGreen")
-//        let heritage = Color("Heritage")
-//        let lightGreen = Color("LightGreen")
-//    }
+    // MARK: - Typography colors
 }

@@ -48,13 +48,6 @@ extension Font {
     
 }
 
-//// MARK: UIFont extension
-//extension UIFont {
-//    // Tab bar
-//    static let tabbarActive = UIFont(name: EuclidCircularB.Semibold, size: 11)
-//    static let tabbarInactive = UIFont(name: EuclidCircularB.Regular, size: 11)
-//}
-
 // MARK: - Font struct
 // MARK: - Euclide Circular B
 struct HelveticaNeue {
