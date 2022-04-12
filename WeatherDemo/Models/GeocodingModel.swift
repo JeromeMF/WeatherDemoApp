@@ -7,25 +7,28 @@
 
 import Foundation
 
-// MARK: - WelcomeElement
+// MARK: - GeocodingModel
 struct GeocodingModel: Codable {
     let name: String
-    let localNames: LocalNames
-    let lat, lon: Double
+//        let localNames: LocalNames
+    let lat: Double
+    let lon: Double
     let country: String
     let state: String?
     
     enum CodingKeys: String, CodingKey {
         case name
-        case localNames
+//                case localNames = "local_names"
         case lat
         case lon
         case country
         case state
     }
+    
+    //    static let emptyGeo: GeocodingModel
 }
 
-// MARK: - LocalNames
+// MARK: - LocalNames (Disabled for this demos)
 struct LocalNames: Codable {
     let featureName: String
     let ascii: String
@@ -43,7 +46,7 @@ struct LocalNames: Codable {
     let vi, zu: String?
     
     enum CodingKeys: String, CodingKey {
-        case featureName
+        case featureName = "feature_name"
         case ascii
         case af, ar, az, bg, ca, da, de, el, en, eu, fa
         case fi, fr, gl, he, hi, hr, hu, id, it, ja, la
@@ -52,3 +55,10 @@ struct LocalNames: Codable {
 }
 
 typealias GeoModel = [GeocodingModel]
+
+// MARK: - Placeholder
+extension GeocodingModel {
+    static func emptyModel() -> GeocodingModel {
+        return GeocodingModel(name: "", lat: 0.0, lon: 0.0, country: "", state: "")
+    }
+}
