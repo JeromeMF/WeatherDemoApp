@@ -1,6 +1,6 @@
 # WeatherDemoApp
 
-Superb demo app challenge
+Weather demo app:
 
   - Integrates with weather API https://openweathermap.org/api 
     - Uses the current weather data from the API and the Geocoding API
